@@ -1,0 +1,10 @@
+{
+  "faculties": [
+    {
+      "facultyId": "300882882",
+      "facultyName": "satyam",
+      "departmentName": "CSCI",
+      "yearOfJoining": "2021"
+    }
+  ]
+}

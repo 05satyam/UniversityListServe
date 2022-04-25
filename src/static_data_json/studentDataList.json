@@ -1,0 +1,10 @@
+{
+  "students": [
+    {
+      "studentId": "300882882",
+      "studentName": "satyam",
+      "departmentName": "CSCI",
+      "yearOfAdmission": "2021"
+    }
+  ]
+}
