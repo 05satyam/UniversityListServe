@@ -27,12 +27,12 @@ public class DepartmentImpl extends Department implements UniversityInterface {
            getFacultyList().add(ft);
     }
 
-    public void removeStudent() {
-
+    public void removeStudent(int seqId) {
+        getStudentList().remove(seqId);
     }
 
-    public void removeFaculty() {
-
+    public void removeFaculty(int seqId) {
+        getFacultyList().remove(seqId);
     }
 
     @Override
