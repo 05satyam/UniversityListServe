@@ -1,15 +1,11 @@
 package data_objects_DAO;
 
-import com.fasterxml.jackson.*;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import leaf.StudentLeafClass;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utilities.JsonParser;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Student {
@@ -61,14 +57,14 @@ public class Student {
     public Student() {
     }
 
-    public List<Student> getStudentListFromStaticData() {
+    public List<StudentLeafClass> getStudentListFromStaticData() {
         JSONArray jsonArray = JsonParser.getJsonArray("studentData", "src/static_data_json/studentDataList.json");
         if (jsonArray == null)
             return null;
-        List<Student> studentList = new ArrayList<>();
+        List<StudentLeafClass> studentList = new ArrayList<>();
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonobject = (JSONObject) jsonArray.get(i);
-            Student st = new Student((String) jsonobject.get("studentName"), (String) jsonobject.get("studentId"),
+            StudentLeafClass st = new StudentLeafClass((String) jsonobject.get("studentName"), (String) jsonobject.get("studentId"),
                     (String) jsonobject.get("departmentName"), (String) jsonobject.get("yearOfAdmission"));
             studentList.add(st);
 

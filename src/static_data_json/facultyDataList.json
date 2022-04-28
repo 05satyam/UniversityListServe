@@ -2,9 +2,28 @@
   "faculties": [
     {
       "facultyId": "300882882",
-      "facultyName": "satyam",
+      "facultyName": "sayam",
       "departmentName": "CSCI",
       "yearOfJoining": "2021"
+    },
+    {
+      "facultyId": "3002882",
+      "facultyName": "sim",
+      "departmentName": "ECE",
+      "yearOfJoining": "2021"
+    },
+    {
+      "facultyId": "30082",
+      "facultyName": "Pie",
+      "departmentName": "Maths",
+      "yearOfJoining": "2021"
+    },
+    {
+      "facultyId": "30882",
+      "facultyName": "Gama",
+      "departmentName": "Physics",
+      "yearOfJoining": "2021"
     }
+
   ]
 }

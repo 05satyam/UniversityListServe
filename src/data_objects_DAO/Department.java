@@ -23,7 +23,7 @@ public class Department {
     }
 
     public String getDepartmentName() {
-        return departmentName;
+        return  this.departmentName;
     }
 
     public void setDepartmentName(String departmentName) {
@@ -31,7 +31,7 @@ public class Department {
     }
 
     public String getCollegeName() {
-        return collegeName;
+        return  this.collegeName;
     }
 
     public void setCollegeName(String collegeName) {
@@ -39,7 +39,7 @@ public class Department {
     }
 
     public List<FacultyLeafClass> getFacultyList() {
-        return facultyList;
+        return this.facultyList;
     }
 
     public void setFacultyList(List<FacultyLeafClass> facultyList) {
@@ -47,7 +47,7 @@ public class Department {
     }
 
     public List<StudentLeafClass> getStudentList() {
-        return studentList;
+        return  this.studentList;
     }
 
     public void setStudentList(List<StudentLeafClass> studentList) {

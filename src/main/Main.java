@@ -1,5 +1,6 @@
 package main;
 
+import component.UniversityInterfaceImpl;
 import composite.colleges.CollegeImpl;
 import composite.departments.DepartmentImpl;
 import data_objects_DAO.*;
@@ -8,30 +9,83 @@ import leaf.StudentLeafClass;
 import user_interface.UI;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] arg) {
         Scanner sc = new Scanner(System.in);
         StudentLeafClass st = new StudentLeafClass();
         FacultyLeafClass ft = new FacultyLeafClass();
+
+        /***
+         *
+         * setting some basic data set
+         *
+         * reaading json file for students and faculty data and adding same student and faculty data to alll department.
+         *
+         * 1. Reading student and faculty data from json file by calling "getStudentListFromStaticData() and getStudentListFromStaticData()"
+         * 2. Creating 2 colleges : CSCM, LYLES
+         *      2.1 CSCM : Created 2 department in CSCM college
+         *         2.1.1 : Creating CSCI department in CSCM college and assigning faculty and student data
+         *         2.1.2 : Creating ECE  department in CSCM college and assigning faculty and student data
+         *
+         *      2.2 LYLES : Created 2 department in LYLES college
+         *         2.2.1  : Creating Maths department in LYLES college and assigning faculty and student data
+         *         2.2.2  : Creating Physics department in LYLES college and assigning faculty and student data
+         *
+         * 3. Created University object where CSCM and LYLES are stores.
+         *
+         * Some Abbreviations:
+         * Fac: Faculty, Stu: Student, dept: department,
+         * Impl: Implementation , clg: college
+         *
+         *
+         * Below is the tree structure of design
+         *
+         *                        University(Fresno State)                  ----> can send alert and notification to everyone
+         *                        /                    \
+         *                      /                       \
+         *                   CSCM(College)              LYLES(COLLEGE)     ----->  can send notification to all or departments
+         *                  /           \                /        \
+         *                 /             \              /          \
+         *              CSCI(dept)        ECE(dept)    Maths(dept)  Physics(dept)  -----> can send notification to both fac and stu or either fac or stu
+         *              /      \           /     \        /    \       /   \
+         *             /        \         /       \      /      \     /     \
+         *          Stu        Fac      Stu     Fac    Stu    Fac   Stu     Fac
+         */
         List<StudentLeafClass> studentList = st.getStudentListFromStaticData();
+
         List<FacultyLeafClass> facultyData = ft.getFacultyListFromStaticData();
-        DepartmentImpl csmDept1 = new DepartmentImpl("CSCI", "CSCM", facultyData, studentList);
-        DepartmentImpl csmDept2 = new DepartmentImpl("ECE", "CSCM", facultyData, studentList);
 
-        DepartmentImpl lylesDept1 = new DepartmentImpl("MATHS", "LYLES", facultyData, studentList);
-        DepartmentImpl lylesDept2 = new DepartmentImpl("PHYSICS", "LYLES", facultyData, studentList);
+        /**
+         *  creating CSCM college departments
+         */
 
+        DepartmentImpl csmClgDept1 = new DepartmentImpl("CSCI", "CSCM", facultyData, studentList);
+        DepartmentImpl csmCLgDept2 = new DepartmentImpl("ECE", "CSCM", facultyData, studentList);
+
+        /**
+         *  creating LYLES college departments
+         */
+        DepartmentImpl lylesClgDept1 = new DepartmentImpl("MATHS", "LYLES", facultyData, studentList);
+        DepartmentImpl lylesClgDept2 = new DepartmentImpl("PHYSICS", "LYLES", facultyData, studentList);
+
+
+        /**
+         *  creating
+         */
         List<DepartmentImpl> departmentListCSCM = new ArrayList<>();
-        departmentListCSCM.add(csmDept1);
-        departmentListCSCM.add(csmDept2);
+        departmentListCSCM.add(csmClgDept1);
+        departmentListCSCM.add(csmClgDept1);
 
 
         List<DepartmentImpl> departmentListLYLES = new ArrayList<>();
-        departmentListLYLES.add(lylesDept1);
-        departmentListLYLES.add(lylesDept2);
+
+        departmentListLYLES.add(lylesClgDept1);
+        departmentListLYLES.add(lylesClgDept2);
 
         CollegeImpl c1 = new CollegeImpl("CSCM",  departmentListCSCM, University.getInstance());
         CollegeImpl c2 = new CollegeImpl("LYLES", departmentListLYLES, University.getInstance());
@@ -40,89 +94,37 @@ public class Main {
         collegeList.add(c1);
         collegeList.add(c2);
 
-        University uv = new University();
+        /***
+         * implemented singelton pattern in UniversityInterfaceImpl
+         */
+        UniversityInterfaceImpl uv = UniversityInterfaceImpl.getInstance();
         uv.setCollegeList(collegeList);
 
         System.out.println("------------------------------------------------------------------");
         System.out.println("--------------WELCOME TO LIST-SERVE OF FRESNO STATE---------------");
         System.out.println("------------------------------------------------------------------");
+        try {
+            UI.printCurrentlyAvailableDataInUniversity(studentList, facultyData);
+            String doYouWantToContinueChoice = "N";
+            do {
+                UI.printMainMenuForUser(collegeList, departmentListCSCM, departmentListLYLES, uv);
 
-        UI.printCurrentlyAvailableDataInUniversity(studentList,facultyData);
-        String doYouWantToContinueChoice = "N";
-        do {
-            UI.printMainMenuForUser(collegeList, departmentListCSCM, departmentListLYLES, uv);
+                System.out.println("You are in the main menu.Do you want to start over from main menu(Y/N)? ");
 
-            System.out.println("Do you want to start over from main menu? ");
-            doYouWantToContinueChoice = sc.next();
-        }while ("Y".equalsIgnoreCase(doYouWantToContinueChoice));
-        String ch = "N";
-        do {
-            System.out.println("Choose from below options :- ");
-            System.out.println("1. Enter new student or Faculty data    2. Delete a student or faculty data  3. Add new Department     4. Remove Department");
-            int menuChoice = sc.nextInt();
-            switch (menuChoice) {
-                case 1:
-                    printChoiceMenuAndGetNewStudentFacultyData(studentList, facultyData);
-                    break;
-                case 2:
-                    deleteStudentFacultyDateFromDataBase(studentList, facultyData);
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-            }
-            System.out.println("Do you want to continue with main menu(Y/N) ?");
-            ch = sc.next();
+                doYouWantToContinueChoice = sc.next();
+            } while ("Y".equalsIgnoreCase(doYouWantToContinueChoice));
 
-        } while (ch.equalsIgnoreCase("Y"));
+            System.out.println("---------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------");
+            System.out.println("Exiting from the University List Serve Applications. Thank you for using it!!!");
+            System.out.println("---------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------");
+        }catch(Exception e){
+            System.out.println("exception "+ e.getMessage() );
+            System.out.println("stack trace "+ e.getStackTrace()[0]);
+            System.out.println("UNEXPECTED FAILURE OCCUR!!!! PLEASE TRY AGAIN FROM START");
+        }
     }
 
-    private static void printChoiceMenuAndGetNewStudentFacultyData(List<StudentLeafClass> studentList, List<FacultyLeafClass> facultyData) {
-        Scanner sc = new Scanner(System.in);
-        String ch1 = "N";
-        do {
-            System.out.println("Choose from below options");
-            System.out.println("1. Enter Student      2. Enter faculty");
-            int ch = sc.nextInt();
-            switch (ch) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                default:
-
-            }
-            System.out.println("Do you want to add more data(Y/N)?");
-            ch1 = sc.nextLine();
-        } while ("Y".equalsIgnoreCase(ch1));
-    }
-
-    private static void deleteStudentFacultyDateFromDataBase(List<StudentLeafClass> studentList, List<FacultyLeafClass> facultyData) {
-        Scanner sc = new Scanner(System.in);
-        String chForLoop = "N";
-        do {
-            System.out.println("Choose from below option :- ");
-            System.out.println("1. Do you want to delete Student data?      2. Do you want to delete Faculty data? ");
-            int ch = sc.nextInt();
-            switch (ch) {
-                case 1:
-                    Student.printCurrentStudentData(studentList);
-                    System.out.println("Enter sequenceId you want to delete: ");
-                    int seqId = sc.nextInt();
-                    studentList.remove(seqId - 1);
-                    break;
-                case 2:
-                    Faculty.printCurrentFacultyData(facultyData);
-                    System.out.println("Enter sequenceId you want to delete: ");
-                    seqId = sc.nextInt();
-                    facultyData.remove(seqId - 1);
-                    break;
-
-            }
-            System.out.println("Do you want to delete from data(Y/N)?");
-            chForLoop = sc.next();
-        } while ("Y".equalsIgnoreCase(chForLoop));
-    }
 
 }

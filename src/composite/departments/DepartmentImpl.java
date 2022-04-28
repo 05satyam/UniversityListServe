@@ -20,15 +20,15 @@ public class DepartmentImpl extends Department implements UniversityInterface {
     }
 
     public void addStudent(StudentLeafClass st) {
-        getStudentList().add(st);
+        this.getStudentList().add(st);
     }
 
     public void addFaculty(FacultyLeafClass ft) {
-           getFacultyList().add(ft);
+           this.getFacultyList().add(ft);
     }
 
     public void removeStudent(int seqId) {
-        getStudentList().remove(seqId);
+        this.getStudentList().remove(seqId);
     }
 
     public void removeFaculty(int seqId) {
@@ -37,13 +37,26 @@ public class DepartmentImpl extends Department implements UniversityInterface {
 
     @Override
     public void notifyObserver(String msg, String senderName, List<String> notificationLevel) {
-        System.out.println("-----------------STUDENTS----------------------");
-        for (StudentLeafClass st : getStudentList())
-            st.notifyObserver(msg, senderName, notificationLevel);
-        System.out.println("-----------------FACULTY----------------------");
-        for (FacultyLeafClass ft : getFacultyList())
-            ft.notifyObserver(msg, senderName, notificationLevel);
-
+        boolean sendToFacultyOnly=false;
+        boolean sendStudentsOnly= false;
+        if(notificationLevel==null){
+            sendToFacultyOnly=true;
+            sendStudentsOnly=true;
+        }else if(notificationLevel.size()>0 && "Faculty".equalsIgnoreCase(notificationLevel.get(0))){
+            sendToFacultyOnly=true;
+        }else if(notificationLevel.size()>0 && "Students".equalsIgnoreCase(notificationLevel.get(0))){
+            sendStudentsOnly=true;
+        }
+            if(sendStudentsOnly) {
+                System.out.println("-----------------STUDENTS----------------------");
+                for (StudentLeafClass st : getStudentList())
+                    st.notifyObserver(msg, senderName, null);
+            }
+            if(sendToFacultyOnly) {
+                System.out.println("-----------------FACULTY----------------------");
+                for (FacultyLeafClass ft : getFacultyList())
+                    ft.notifyObserver(msg, senderName, null);
+            }
 
     }
 

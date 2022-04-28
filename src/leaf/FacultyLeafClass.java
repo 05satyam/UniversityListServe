@@ -37,6 +37,7 @@ public class FacultyLeafClass extends  Faculty implements UniversityInterface {
 
 
     public static List<FacultyLeafClass> getFacultyListFromStaticData() {
+        System.out.println("inside getFacultyListFromStaticData");
         JSONArray jsonArray = JsonParser.getJsonArray("faculties","src/static_data_json/facultyDataList.json");
         if (jsonArray == null)
             return null;

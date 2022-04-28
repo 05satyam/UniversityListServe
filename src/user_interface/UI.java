@@ -1,13 +1,18 @@
 package user_interface;
 
+import component.UniversityInterface;
+import component.UniversityInterfaceImpl;
 import composite.colleges.CollegeImpl;
 import composite.departments.DepartmentImpl;
 import data_objects_DAO.Student;
 import data_objects_DAO.University;
 import leaf.FacultyLeafClass;
 import leaf.StudentLeafClass;
+import notification_proxy_implementation.NotificationProxyImpl;
+import notification_proxy_implementation.NotificationProxyInterface;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,7 +22,8 @@ public class UI {
     public static void printCurrentlyAvailableDataInUniversity(List<StudentLeafClass> studentList, List<FacultyLeafClass> facultyData) {
         System.out.println("Currently we have : " + studentList.size() + " number of students and " + facultyData.size() + " number of faculties in total");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Do you want to view current student or faculty data? If yes choose from:  1. Student data  2. Faculty data   3. No");
+        System.out.println("Do you want to view current student or faculty data? ");
+        System.out.println("If yes choose from:  1. Student data  2. Faculty data   3. No Proceed to Main Menu");
         int ch = sc.nextInt();
         switch (ch) {
             case 1:
@@ -34,22 +40,24 @@ public class UI {
 
     public static void printAvaliableStudentsData(List<StudentLeafClass> stList) {
         for (StudentLeafClass st : stList)
-            st.toString();
+            System.out.println(st.toString());
     }
 
     public static void printAvaliableFacultyData(List<FacultyLeafClass> stList) {
         for (FacultyLeafClass ft : stList)
-            ft.toString();
+            System.out.println(ft.toString());
     }
 
 
-    public static void printMainMenuForUser(List<CollegeImpl> collegeList, List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, University uv) {
+    public static void printMainMenuForUser(List<CollegeImpl> collegeList, List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, UniversityInterfaceImpl uv) {
         Scanner sc = new Scanner(System.in);
-        String doYouWantToContinueChoice = "N";
+        System.out.println("size of csm deparrtment "+ departmentListCSCM.size());
+        System.out.println("size of lyles deparrtment "+ departmentListLYLES.size());
+
         System.out.println("Menu options are: ");
         System.out.println("1. Create new department --- 2. Enter new Student data --- 3. Enter new Faculty Data ");
         System.out.println("--- 4. Remove a Department --- 5. Remove Faculty Data --- 6. Remove Student Data --- ");
-        System.out.println("7. Send Notification");
+        System.out.println("7. View all Faculty data  --- 8.View all students data --- 9. Send Notification");
         int ch = sc.nextInt();
 
         switch (ch) {
@@ -84,7 +92,7 @@ public class UI {
                 /***
                  * displaying all the departments available to the user
                  */
-                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES);
+                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES, uv);
 
                 System.out.println();
                 System.out.println("Choose the department from above list in which students will be created");
@@ -98,7 +106,7 @@ public class UI {
                 String yearAdm = sc.next();
                 int deptNum = 0;
                 DepartmentImpl choosenDept = getDepartmentWhichUserSelects(departmentListCSCM, departmentListLYLES, deptCh);
-
+                System.out.println("chhosen dept in students "+ choosenDept.getDepartmentName());
                 StudentLeafClass st = new StudentLeafClass(name, id, choosenDept.getDepartmentName(), yearAdm);
                 choosenDept.addStudent(st);
                 break;
@@ -111,11 +119,10 @@ public class UI {
                 System.out.println("-----You choose to create a new Faculty-----");
 
 
-
                 /***
                  * displaying all the departments available to the user
                  */
-                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES);
+                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES, uv);
                 System.out.println();
                 System.out.println("Choose the department fromm above list in which students will be created");
                 deptCh = sc.nextInt();
@@ -126,11 +133,13 @@ public class UI {
                 id = sc.next();
                 System.out.println("Enter student year of joining ");
                 yearAdm = sc.next();
-                deptNum = 0;
+
                 choosenDept = getDepartmentWhichUserSelects(departmentListCSCM, departmentListLYLES, deptCh);
+                System.out.println("choosen dept "+ choosenDept.getDepartmentName());
 
                 FacultyLeafClass ft = new FacultyLeafClass(name, choosenDept.getDepartmentName(), id, yearAdm);
                 choosenDept.addFaculty(ft);
+                System.out.println("New Faculty data has been added successfully");
                 break;
             case 4:
                 System.out.println("You choose to remove a department. WARNING!! removing a department means" +
@@ -139,7 +148,7 @@ public class UI {
                  * displaying all the departments available to the user
                  */
 
-                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES);
+                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES, uv);
                 System.out.println();
                 System.out.println("Enter the sequence number of department from above list which you want to remove");
                 deptCh = sc.nextInt();
@@ -150,13 +159,13 @@ public class UI {
                 List<FacultyLeafClass> deptFt = choosenDept.getFacultyList();
                 choosenDept.getStudentList().removeAll(deptFt);
                 collegeList.remove(choosenDept);
-                if("CSCM".equalsIgnoreCase(choosenDept.getCollegeName()))
+                if ("CSCM".equalsIgnoreCase(choosenDept.getCollegeName()))
                     departmentListCSCM.remove(choosenDept);
-                else if("LYLES".equalsIgnoreCase(choosenDept.getCollegeName()))
+                else if ("LYLES".equalsIgnoreCase(choosenDept.getCollegeName()))
                     departmentListLYLES.remove(choosenDept);
 
-                System.out.println("WARNING!! We have successfully removed "+ choosenDept.getDepartmentName() +
-                        " from college "+ choosenDept.getCollegeName());
+                System.out.println("WARNING!! We have successfully removed " + choosenDept.getDepartmentName() +
+                        " from college " + choosenDept.getCollegeName());
                 break;
             case 5:
                 System.out.println("You have chose to remove a faculty");
@@ -164,17 +173,17 @@ public class UI {
                 /***
                  * displaying all the departments available to the user
                  */
-                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES);
+                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES, uv);
                 System.out.println();
                 System.out.println("Choose the department from above list from which you want to remove faculty");
                 deptCh = sc.nextInt();
                 System.out.println("--------------------------------------------------------------------------------------");
-                System.out.println("Faculties available in choosen department are: " );
-                choosenDept =  getDepartmentWhichUserSelects(departmentListCSCM, departmentListLYLES, deptCh);
-                int seqId=1;
-                for(FacultyLeafClass depFt: choosenDept.getFacultyList()){
-                    System.out.println("Seq id: "+ seqId + "  Faculty id: "+ depFt.getFacultyId() +
-                            " Faculty name: "+ depFt.getFacultyName() + " Faculty department: "+ depFt.getFacultyName());
+                System.out.println("Faculties available in choosen department are: ");
+                choosenDept = getDepartmentWhichUserSelects(departmentListCSCM, departmentListLYLES, deptCh);
+                int seqId = 1;
+                for (FacultyLeafClass depFt : choosenDept.getFacultyList()) {
+                    System.out.println("Seq id: " + seqId + "  Faculty id: " + depFt.getFacultyId() +
+                            " Faculty name: " + depFt.getFacultyName() + " Faculty department: " + depFt.getFacultyName());
 
 
                 }
@@ -189,17 +198,17 @@ public class UI {
                 /***
                  * displaying all the departments available to the user
                  */
-                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES);
+                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES, uv);
                 System.out.println();
                 System.out.println("Choose the department from above list from which you want to remove student");
                 deptCh = sc.nextInt();
                 System.out.println("--------------------------------------------------------------------------------------");
-                System.out.println("Faculties available in choosen department are: " );
-                choosenDept =  getDepartmentWhichUserSelects(departmentListCSCM, departmentListLYLES, deptCh);
-                 seqId=1;
-                for(StudentLeafClass depFt: choosenDept.getStudentList()){
-                    System.out.println("Seq id: "+ seqId + "  Student id: "+ depFt.getStudentId() +
-                            " Student name: "+ depFt.getStudentName() + " Student department: "+ depFt.getDepartmentName());
+                System.out.println("Faculties available in choosen department are: ");
+                choosenDept = getDepartmentWhichUserSelects(departmentListCSCM, departmentListLYLES, deptCh);
+                seqId = 1;
+                for (StudentLeafClass depFt : choosenDept.getStudentList()) {
+                    System.out.println("Seq id: " + seqId + "  Student id: " + depFt.getStudentId() +
+                            " Student name: " + depFt.getStudentName() + " Student department: " + depFt.getDepartmentName());
 
 
                 }
@@ -209,30 +218,57 @@ public class UI {
                 choosenDept.removeStudent(facSeqId);
                 break;
             case 7:
-                System.out.println("You have choosen to send notification");
-                System.out.println("We have following ways to send notifications. Kindly enter your choice");
-                System.out.println("1. Do you want to send Emergency alert on behalf of Fresno State to everyone?");
-                System.out.println("2. Do you want to send normal announcement on behalf of Fresno State to everyone?");
-                System.out.println("3. Do you want to send an announcement on behalf of department to students and faculty?");
-
+                for (DepartmentImpl dpt : departmentListCSCM) {
+                    System.out.println("------------Faculty present in the department " + dpt.getDepartmentName() + " -----------------");
+                    printAvaliableFacultyData(dpt.getFacultyList());
+                }
+                for (DepartmentImpl dpt : departmentListLYLES) {
+                    System.out.println("------------Students present in the department " + dpt.getDepartmentName() + " -----------------");
+                    printAvaliableFacultyData(dpt.getFacultyList());
+                }
+                break;
+            case 8:
+                for (DepartmentImpl dpt : departmentListCSCM) {
+                    System.out.println("------------Students present in the department " + dpt.getDepartmentName() + " -----------------");
+                    printAvaliableStudentsData(dpt.getStudentList());
+                }
+                for (DepartmentImpl dpt : departmentListLYLES) {
+                    System.out.println("------------Students present in the department " + dpt.getDepartmentName() + " -----------------");
+                    printAvaliableStudentsData(dpt.getStudentList());
+                }
+                break;
+            case 9:
+                int notificationCh = showNotificationMenuAndGetUserChoice();
+                sendNotifcationToObservers(notificationCh, collegeList, departmentListCSCM, departmentListLYLES, uv);
             default:
                 break;
         }
 
     }
 
-    private static DepartmentImpl getDepartmentWhichUserSelects(List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, int deptCh) {
-        DepartmentImpl choosenDept = null;
-        if (deptCh > departmentListCSCM.size()) {
-            deptCh = (departmentListCSCM.size() + departmentListLYLES.size()) - deptCh;
-            choosenDept = departmentListLYLES.get(deptCh);
-        } else {
-            choosenDept = departmentListCSCM.get(deptCh);
-        }
-        return choosenDept;
+    public static int showNotificationMenuAndGetUserChoice() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("You have choosen to send notification");
+        System.out.println("We have following ways to send notifications. Kindly enter your choice");
+        System.out.println("1. Do you want to send Emergency alert on behalf of Fresno State to everyone?");
+        System.out.println("2. Do you want to send normal announcement on behalf of Fresno State to everyone?");
+        System.out.println("3. Do you want to send an announcement on behalf of department to students and faculty?");
+        System.out.println("4. Do you want to send an announcement on behalf of department to faculty only");
+        System.out.println("5. Do you want to send an announcement on behalf of department to students only");
+        int notificationCh = sc.nextInt();
+        return notificationCh;
     }
 
-    private static void printAllAvailableDepartments(List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES) {
+    public static DepartmentImpl getDepartmentWhichUserSelects(List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, int deptCh) {
+        if (deptCh > departmentListCSCM.size()) {
+            deptCh = (departmentListCSCM.size() + departmentListLYLES.size()) - deptCh-1;
+            return departmentListLYLES.get(deptCh);
+        } else {
+            return departmentListCSCM.get(deptCh);
+        }
+    }
+
+    public static void printAllAvailableDepartments(List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, UniversityInterfaceImpl uv) {
         System.out.println("--------------------------------------------------------------------------------------");
         System.out.println("Departments available are: ");
         int i;
@@ -246,5 +282,72 @@ public class UI {
             i++;
         }
         System.out.println("--------------------------------------------------------------------------------------");
+    }
+
+    public static void sendNotifcationToObservers(int notificationCh, List<CollegeImpl> collegeList,
+                                                  List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, UniversityInterfaceImpl uv) {
+        NotificationProxyInterface nvI = new NotificationProxyImpl();
+        Scanner sc = new Scanner(System.in);
+        String announcement = null;
+        switch (notificationCh) {
+            case 1:
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Send an Emergency alert on behalf of Fresno State to everyone");
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Please enter the alert announcement");
+                announcement = sc.next();
+                nvI.sendEmergencyNotificationToObservers(uv, announcement, uv.getUniversityName(), null);
+                break;
+            case 2:
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Send normal announcement on behalf of Fresno State to everyone");
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Please enter the alert announcement");
+                announcement = sc.next();
+                nvI.sendNotificationToObservers(uv, announcement, uv.getUniversityName(), null);
+                break;
+            case 3:
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Send normal announcement on behalf of department to students and faculty");
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Please enter the  announcement");
+                announcement = sc.next();
+                System.out.println("Please choose the department from which you want to send notification");
+                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES, uv);
+                int deptCh = sc.nextInt();
+                DepartmentImpl choosenDept = getDepartmentWhichUserSelects(departmentListCSCM, departmentListLYLES, deptCh);
+                nvI.sendNotificationToObservers(choosenDept, announcement, choosenDept.getDepartmentName(), null);
+                break;
+            case 4:
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Send normal announcement  on behalf of department to faculty only");
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Please enter the  announcement");
+                announcement = sc.next();
+                System.out.println("Please choose the department from which you want to send notification");
+                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES, uv);
+                deptCh = sc.nextInt();
+                choosenDept = getDepartmentWhichUserSelects(departmentListCSCM, departmentListLYLES, deptCh);
+                nvI.sendNotificationToObservers(choosenDept, announcement, choosenDept.getDepartmentName(), new ArrayList<>(Arrays.asList("Faculty")));
+                break;
+            case 5:
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Send normal announcement  on behalf of department to student only");
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Please enter the  announcement");
+                announcement = sc.next();
+                System.out.println("Please choose the department from which you want to send notification");
+                printAllAvailableDepartments(departmentListCSCM, departmentListLYLES, uv);
+                deptCh = sc.nextInt();
+                choosenDept = getDepartmentWhichUserSelects(departmentListCSCM, departmentListLYLES, deptCh);
+                nvI.sendNotificationToObservers(choosenDept, announcement, choosenDept.getDepartmentName(), new ArrayList<>(Arrays.asList("Student")));
+                break;
+            default:
+                System.out.println("WRONG CHOICE");
+                break;
+
+
+        }
+
     }
 }

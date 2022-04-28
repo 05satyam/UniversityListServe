@@ -5,6 +5,25 @@
       "studentName": "satyam",
       "departmentName": "CSCI",
       "yearOfAdmission": "2021"
+    },
+    {
+      "studentId": "300882883",
+      "studentName": "Sam",
+      "departmentName": "ECE",
+      "yearOfAdmission": "2021"
+    },
+    {
+      "studentId": "3008823",
+      "studentName": "Mat",
+      "departmentName": "Maths",
+      "yearOfAdmission": "2021"
+    },
+    {
+      "studentId": "30308823",
+      "studentName": "Phy",
+      "departmentName": "Physics",
+      "yearOfAdmission": "2021"
     }
+
   ]
 }
