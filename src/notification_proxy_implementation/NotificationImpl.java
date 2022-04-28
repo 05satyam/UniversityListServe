@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 public class NotificationImpl implements NotificationProxyInterface{
 
+
     @Override
     public void sendNotificationToObservers(UniversityInterface uvI, String msg, String senderName, List<String> notificationLevel) {
         uvI.notifyObserver(msg, senderName, notificationLevel);

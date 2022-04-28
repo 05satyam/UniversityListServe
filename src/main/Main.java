@@ -12,6 +12,45 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+/***
+ *----------------------------------------_SMALL DOCUMENTATION OF THE FLOW-----------------------------------
+ * setting some basic data set
+ *
+ * reaading json file for students and faculty data and adding same student and faculty data to alll department.
+ *
+ * 1. Reading student and faculty data from json file by calling "getStudentListFromStaticData() and getStudentListFromStaticData()"
+ * 2. Creating 2 colleges : CSCM, LYLES
+ *      2.1 CSCM : Created 2 department in CSCM college
+ *         2.1.1 : Creating CSCI department in CSCM college and assigning faculty and student data
+ *         2.1.2 : Creating ECE  department in CSCM college and assigning faculty and student data
+ *
+ *      2.2 LYLES : Created 2 department in LYLES college
+ *         2.2.1  : Creating Maths department in LYLES college and assigning faculty and student data
+ *         2.2.2  : Creating Physics department in LYLES college and assigning faculty and student data
+ *
+ * 3. Created University object where CSCM and LYLES are stores.
+ *
+ * Some Abbreviations:
+ * Fac: Faculty, Stu: Student, dept: department,
+ * Impl: Implementation , clg: college
+ *
+ *
+ * Below is the tree structure of design
+ *
+ *                        University(Fresno State)                  ----> can send alert and notification to everyone
+ *                        /                    \
+ *                      /                       \
+ *                   CSCM(College)              LYLES(COLLEGE)     ----->  can send notification to all or departments
+ *                  /           \                /        \
+ *                 /             \              /          \
+ *              CSCI(dept)        ECE(dept)    Maths(dept)  Physics(dept)  -----> can send notification to both fac and stu or either fac or stu
+ *              /      \           /     \        /    \       /   \
+ *             /        \         /       \      /      \     /     \
+ *          Stu        Fac      Stu     Fac    Stu    Fac   Stu     Fac
+ *
+ *
+ * ------------------------------------------------------------------------------------------------------------------------
+ */
 
 public class Main {
 
@@ -20,44 +59,7 @@ public class Main {
         StudentLeafClass st = new StudentLeafClass();
         FacultyLeafClass ft = new FacultyLeafClass();
 
-        /***
-         *
-         * setting some basic data set
-         *
-         * reaading json file for students and faculty data and adding same student and faculty data to alll department.
-         *
-         * 1. Reading student and faculty data from json file by calling "getStudentListFromStaticData() and getStudentListFromStaticData()"
-         * 2. Creating 2 colleges : CSCM, LYLES
-         *      2.1 CSCM : Created 2 department in CSCM college
-         *         2.1.1 : Creating CSCI department in CSCM college and assigning faculty and student data
-         *         2.1.2 : Creating ECE  department in CSCM college and assigning faculty and student data
-         *
-         *      2.2 LYLES : Created 2 department in LYLES college
-         *         2.2.1  : Creating Maths department in LYLES college and assigning faculty and student data
-         *         2.2.2  : Creating Physics department in LYLES college and assigning faculty and student data
-         *
-         * 3. Created University object where CSCM and LYLES are stores.
-         *
-         * Some Abbreviations:
-         * Fac: Faculty, Stu: Student, dept: department,
-         * Impl: Implementation , clg: college
-         *
-         *
-         * Below is the tree structure of design
-         *
-         *                        University(Fresno State)                  ----> can send alert and notification to everyone
-         *                        /                    \
-         *                      /                       \
-         *                   CSCM(College)              LYLES(COLLEGE)     ----->  can send notification to all or departments
-         *                  /           \                /        \
-         *                 /             \              /          \
-         *              CSCI(dept)        ECE(dept)    Maths(dept)  Physics(dept)  -----> can send notification to both fac and stu or either fac or stu
-         *              /      \           /     \        /    \       /   \
-         *             /        \         /       \      /      \     /     \
-         *          Stu        Fac      Stu     Fac    Stu    Fac   Stu     Fac
-         */
         List<StudentLeafClass> studentList = st.getStudentListFromStaticData();
-
         List<FacultyLeafClass> facultyData = ft.getFacultyListFromStaticData();
 
         /**
@@ -102,6 +104,7 @@ public class Main {
          */
         UniversityInterfaceImpl uv = UniversityInterfaceImpl.getInstance();
         uv.setCollegeList(collegeList);
+        uv.setUniversityName("FRESNO STATE");
 
         System.out.println("---------------------------------------------------------------------------------------------");
         System.out.println("----------------------WELCOME TO LIST-SERVE OF FRESNO STATE----------------------------------");
@@ -126,7 +129,10 @@ public class Main {
             System.out.println("---------------------Thank you for using LIST-SERVE--------------------------------------");
             System.out.println("-----------------------------------------------------------------------------------------");
         }catch(Exception e){
-           // System.out.println("stack trace "+ e.getStackTrace()[0]);
+            System.out.println("stack trace "+ e.getMessage());
+            for(int i=0;i<e.getStackTrace().length;i++){
+                System.out.println("stack trace "+ e.getStackTrace()[i]);
+            }
             System.out.println("UNEXPECTED FAILURE OCCUR!!!! PLEASE TRY AGAIN FROM START");
         }
     }

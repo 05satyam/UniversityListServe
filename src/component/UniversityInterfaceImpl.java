@@ -27,7 +27,7 @@ public class UniversityInterfaceImpl extends University implements UniversityInt
     public void notifyObserver(String msg, String senderName, List<String> notificationLevel) {
         for (String collegeName : notificationLevel) {
             for (CollegeImpl college : this.getCollegeList()) {
-                if (college.getCollegeName().equalsIgnoreCase(collegeName) || collegeName.equalsIgnoreCase("0"))
+                if (college.getCollegeName().equalsIgnoreCase(collegeName) || collegeName.equalsIgnoreCase("00"))
                     college.notifyObserver(msg, senderName, notificationLevel);
             }
         }

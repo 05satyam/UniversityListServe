@@ -34,11 +34,10 @@ public class StudentLeafClass extends Student implements UniversityInterface {
 
     public List<StudentLeafClass> getStudentListFromStaticData() {
         System.out.println("inside getStudentListFromStaticData");
-        JSONArray jsonArray = JsonParser.getJsonArray("students", "/Users/satyammittal/IdeaProjects/UniversityListServe/src/static_data_json/studentDataList.json");
+        JSONArray jsonArray = JsonParser.getJsonArray("studentData", "/Users/satyammittal/IdeaProjects/UniversityListServe/src/static_data_json/studentDataList.json");
         System.out.println("jsonArray "+ jsonArray);
         if (jsonArray == null){
-            System.out.println("jsonArray is null");
-            return null;
+            return new ArrayList<>();
         }
         List<StudentLeafClass> studentList = new ArrayList<>();
         for (int i = 0; i < jsonArray.size(); i++) {

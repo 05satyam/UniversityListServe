@@ -58,7 +58,7 @@ public class Student {
     }
 
     public List<StudentLeafClass> getStudentListFromStaticData() {
-        JSONArray jsonArray = JsonParser.getJsonArray("studentData", "src/static_data_json/studentDataList.json");
+        JSONArray jsonArray = JsonParser.getJsonArray("students", "src/static_data_json/studentDataList.json");
         if (jsonArray == null)
             return null;
         List<StudentLeafClass> studentList = new ArrayList<>();

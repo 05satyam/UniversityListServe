@@ -10,6 +10,7 @@ import leaf.FacultyLeafClass;
 import leaf.StudentLeafClass;
 import notification_proxy_implementation.NotificationProxyImpl;
 import notification_proxy_implementation.NotificationProxyInterface;
+import utilities.NotificationLevelEnum;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +50,7 @@ public class UI {
     }
 
 
-    public static void printMainMenuForUser(List<CollegeImpl> collegeList, List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, UniversityInterfaceImpl uv) {
+    public static void printMainMenuForUser(List<CollegeImpl> collegeList, List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, UniversityInterfaceImpl uv) throws InterruptedException {
         Scanner sc = new Scanner(System.in);
         System.out.println("...............................Department Metrics............................................");
         System.out.println("Current of CSCM departments count :" + departmentListCSCM.size());
@@ -318,10 +319,11 @@ public class UI {
     }
 
     public static void sendNotifcationToObservers(int notificationCh, List<CollegeImpl> collegeList,
-                                                  List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, UniversityInterfaceImpl uv) {
+                                                  List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, UniversityInterfaceImpl uv) throws InterruptedException {
         NotificationProxyInterface nvI = new NotificationProxyImpl();
         Scanner sc = new Scanner(System.in);
         String announcement = null;
+        List<String>  notificationLevel = new ArrayList<>();
         switch (notificationCh) {
             case 1:
                 System.out.println(".............................................................................................");
@@ -335,9 +337,22 @@ public class UI {
                 System.out.println(".............................................................................................");
                 System.out.println("Send normal announcement on behalf of Fresno State to everyone");
                 System.out.println(".............................................................................................");
+                System.out.println("Enter your choice:  that you want to send notification to:  1. CSCM only   2. LYLES only   3. BOTH");
+                System.out.print("");
+                int chClg = sc.nextInt();
+
                 System.out.println("Please enter the alert announcement");
                 announcement = sc.next();
-                nvI.sendNotificationToObservers(uv, announcement, uv.getUniversityName(), null);
+                System.out.println();
+
+                if(chClg==1)
+                    notificationLevel.add("CSCM");
+                else if(chClg==2)
+                    notificationLevel.add("LYLES");
+                else
+                    notificationLevel.add("00");
+
+                nvI.sendNotificationToObservers(uv, announcement, uv.getUniversityName(), notificationLevel);
                 break;
             case 3:
                 System.out.println(".............................................................................................");

@@ -20,15 +20,15 @@ public class DepartmentImpl extends Department implements UniversityInterface {
     }
 
     public void addStudent(StudentLeafClass st) {
-        this.getStudentList().add(st);
+        getStudentList().add(st);
     }
 
     public void addFaculty(FacultyLeafClass ft) {
-           this.getFacultyList().add(ft);
+           getFacultyList().add(ft);
     }
 
     public void removeStudent(int seqId) {
-        this.getStudentList().remove(seqId);
+        getStudentList().remove(seqId);
     }
 
     public void removeFaculty(int seqId) {
@@ -52,7 +52,7 @@ public class DepartmentImpl extends Department implements UniversityInterface {
                 for (StudentLeafClass st : getStudentList())
                     st.notifyObserver(msg, senderName, null);
             }
-            if(sendToFacultyOnly) {
+            if(sendStudentsOnly) {
                 System.out.println("-----------------FACULTY----------------------");
                 for (FacultyLeafClass ft : getFacultyList())
                     ft.notifyObserver(msg, senderName, null);

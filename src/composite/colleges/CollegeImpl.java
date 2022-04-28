@@ -25,11 +25,11 @@ public class CollegeImpl extends College implements UniversityInterface {
 
     @Override
     public void notifyObserver(String msg, String senderName, List<String> notificationLevel) {
-        for (String departmentName : notificationLevel) {
+        for (String collegeName : notificationLevel) {
 
             for (DepartmentImpl dept : this.getDepartmentList()) {
-                if(dept.getDepartmentName().equalsIgnoreCase(departmentName) || departmentName.equalsIgnoreCase("00")){
-                    System.out.println("Sending notification to student and faculties of department :" + departmentName.toUpperCase());
+                if(dept.getCollegeName().equalsIgnoreCase(collegeName) || collegeName.equalsIgnoreCase("00")){
+                    System.out.println("Sending notification to student and faculties of department :" + dept.getDepartmentName().toUpperCase());
                     dept.notifyObserver(msg, senderName, notificationLevel);
                 }
             }
