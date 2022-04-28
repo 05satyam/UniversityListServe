@@ -23,28 +23,26 @@ class CommandUndoClass {
             System.out.println("Cancelling the announcement in progress. Please Wait!!!!");
             return ch;
         }
-        System.out.println("Please wait until we process your request");
-        //processDelayInSendingNotification(ch);
+        System.out.println("...................Please wait until we process your request.................................");
         //delay times for 3 sec again
         start = System.currentTimeMillis();
         end = start + 3 * 1000;
         while (System.currentTimeMillis() < end) {
-            // Some expensive operation on the item.
+            // delay
         }
-
+        System.out.println();
         System.out.println("Can you confirm again do you want to cancel the announcement??(Y/N)");
         ch = sc.next();
         if ("Y".equalsIgnoreCase(ch)) {
-            System.out.println("Cancelling the announcement in progress. Please Wait!!!!");
+            System.out.println(".................Cancelling the announcement in progress. Please Wait!!!!.................");
             start = System.currentTimeMillis();
             end = start + 2 * 1000;
             while (System.currentTimeMillis() < end) {
-                // Some expensive operation on the item.
+                // delaying
             }
             return ch;
         }
 
-       // processDelayInSendingNotification(ch);
         if (!"Y".equalsIgnoreCase(ch))
             System.out.println("Time's up to cancel the announcement! Now the message will be delieverd");
 

@@ -296,11 +296,12 @@ public class UI {
     }
 
     public static DepartmentImpl getDepartmentWhichUserSelects(List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, int deptCh) {
+        System.out.println("dept ch "+ deptCh + " departmentListCSCM.size() "+ departmentListCSCM.size());
         if (deptCh > departmentListCSCM.size()) {
-            deptCh = (departmentListCSCM.size() + departmentListLYLES.size()) - deptCh - 1;
+            deptCh = (departmentListCSCM.size() + departmentListLYLES.size()) - (deptCh+13) ;
             return departmentListLYLES.get(deptCh);
         } else {
-            return departmentListCSCM.get(deptCh);
+            return departmentListCSCM.get(deptCh-1);
         }
     }
 
