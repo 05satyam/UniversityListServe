@@ -74,12 +74,10 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student {" +
-                "studentName='" + studentName + '\'' +
-                ", studentId='" + studentId + '\'' +
-                ", departmentName='" + departmentName + '\'' +
-                ", yearOfAdmission='" + yearOfAdmission + '\'' +
-                '}';
+        return "Student Name='" + studentName + '\'' +
+                ", Student Id='" + studentId + '\'' +
+                ", Department Name='" + departmentName + '\'' +
+                ", Year Of Admission='" + yearOfAdmission + '\'' ;
     }
 
     public static void printCurrentStudentData(List<StudentLeafClass> studentList){

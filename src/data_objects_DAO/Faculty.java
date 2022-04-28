@@ -60,12 +60,10 @@ public class Faculty {
 
     @Override
     public String toString() {
-        return "Faculty {" +
-                "facultyName='" + facultyName + '\'' +
-                ", departmentName='" + departmentName + '\'' +
-                ", facultyId='" + facultyId + '\'' +
-                ", yearOfJoining='" + yearOfJoining + '\'' +
-                '}';
+        return  "Faculty Name='" + facultyName + '\'' +
+                ", Department Name='" + departmentName + '\'' +
+                ", Faculty Id='" + facultyId + '\'' +
+                ", Year Of Joining='" + yearOfJoining + '\'';
     }
 
     public static void printCurrentFacultyData(List<FacultyLeafClass> facultyList){

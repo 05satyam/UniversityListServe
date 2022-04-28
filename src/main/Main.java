@@ -75,35 +75,42 @@ public class Main {
 
 
         /**
-         *  creating
+         *  creating department list in CSCM clg
          */
         List<DepartmentImpl> departmentListCSCM = new ArrayList<>();
         departmentListCSCM.add(csmClgDept1);
         departmentListCSCM.add(csmClgDept1);
 
 
+        /**
+         *  creating department list in LYLES clg
+         */
         List<DepartmentImpl> departmentListLYLES = new ArrayList<>();
-
         departmentListLYLES.add(lylesClgDept1);
         departmentListLYLES.add(lylesClgDept2);
 
         CollegeImpl c1 = new CollegeImpl("CSCM",  departmentListCSCM, University.getInstance());
         CollegeImpl c2 = new CollegeImpl("LYLES", departmentListLYLES, University.getInstance());
 
+
         List<CollegeImpl> collegeList = new ArrayList<>();
         collegeList.add(c1);
         collegeList.add(c2);
 
         /***
-         * implemented singelton pattern in UniversityInterfaceImpl
+         * implemented singelton pattern in UniversityInterfaceImpl and adding CSCM AND LYLES clg to UNIVERSITY
          */
         UniversityInterfaceImpl uv = UniversityInterfaceImpl.getInstance();
         uv.setCollegeList(collegeList);
 
-        System.out.println("------------------------------------------------------------------");
-        System.out.println("--------------WELCOME TO LIST-SERVE OF FRESNO STATE---------------");
-        System.out.println("------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.println("----------------------WELCOME TO LIST-SERVE OF FRESNO STATE----------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------");
         try {
+            /**
+             * UI is my User Interface class where all user inputs and menu has been displayed
+             *
+             */
             UI.printCurrentlyAvailableDataInUniversity(studentList, facultyData);
             String doYouWantToContinueChoice = "N";
             do {
@@ -114,14 +121,12 @@ public class Main {
                 doYouWantToContinueChoice = sc.next();
             } while ("Y".equalsIgnoreCase(doYouWantToContinueChoice));
 
-            System.out.println("---------------------------------------------------------------");
-            System.out.println("---------------------------------------------------------------");
-            System.out.println("Exiting from the University List Serve Applications. Thank you for using it!!!");
-            System.out.println("---------------------------------------------------------------");
-            System.out.println("---------------------------------------------------------------");
+            System.out.println("-----------------------------------------------------------------------------------------");
+            System.out.println("-----------------------Exiting from APPLICATION------------------------------------------");
+            System.out.println("---------------------Thank you for using LIST-SERVE--------------------------------------");
+            System.out.println("-----------------------------------------------------------------------------------------");
         }catch(Exception e){
-            System.out.println("exception "+ e.getMessage() );
-            System.out.println("stack trace "+ e.getStackTrace()[0]);
+           // System.out.println("stack trace "+ e.getStackTrace()[0]);
             System.out.println("UNEXPECTED FAILURE OCCUR!!!! PLEASE TRY AGAIN FROM START");
         }
     }
