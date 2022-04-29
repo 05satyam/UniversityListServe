@@ -4,6 +4,9 @@ import component.UniversityInterface;
 
 import java.util.List;
 
+/**
+ * Notification proxy interface
+ */
 public interface NotificationProxyInterface {
     public void sendNotificationToObservers(UniversityInterface uvI, String msg, String senderName, List<String> notificationLevel) throws InterruptedException;
 

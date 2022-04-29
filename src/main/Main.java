@@ -1,3 +1,8 @@
+/*
+* Main class to start the project
+*
+*
+* */
 package main;
 
 import component.UniversityInterfaceImpl;
@@ -12,13 +17,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
 /***
- *----------------------------------------_SMALL DOCUMENTATION OF THE FLOW-----------------------------------
- * setting some basic data set
+ *-----------------------------------------SMALL DOCUMENTATION OF THE FLOW-------------------------------------------------
+ * Setting some basic data set
  *
- * reaading json file for students and faculty data and adding same student and faculty data to alll department.
+ * reading json file for students and faculty data and adding same student and faculty data to alll department.
  *
  * 1. Reading student and faculty data from json file by calling "getStudentListFromStaticData() and getStudentListFromStaticData()"
+ * We can add more faculty and students in json and code will add itself
+ *
+ * JSON files to read faculty and student data are: facultyDataList.json, studentDataList.json
+ *
+ *------------------------------------------------------------------------------------------------------------------------
  * 2. Creating 2 colleges : CSCM, LYLES
  *      2.1 CSCM : Created 2 department in CSCM college
  *         2.1.1 : Creating CSCI department in CSCM college and assigning faculty and student data
@@ -28,7 +39,8 @@ import java.util.Scanner;
  *         2.2.1  : Creating Maths department in LYLES college and assigning faculty and student data
  *         2.2.2  : Creating Physics department in LYLES college and assigning faculty and student data
  *
- * 3. Created University object where CSCM and LYLES are stores.
+ * ------------------------------------------------------------------------------------------------------------------------
+ * 3. Created University object where CSCM and LYLES are stored.
  *
  * Some Abbreviations:
  * Fac: Faculty, Stu: Student, dept: department,
@@ -50,6 +62,66 @@ import java.util.Scanner;
  *
  *
  * ------------------------------------------------------------------------------------------------------------------------
+ *
+ *
+ * 3. For announcement alerts i have tried to create following scenarios and many more can be easily integrated in future:
+ *    3.1 Do you want to send Emergency alert on behalf of Fresno State to everyone?
+ *    3.2 Do you want to send normal announcement on behalf of Fresno State to everyone?
+ *    3.3 Do you want to send an announcement on behalf of department to students and faculty?
+ *    3.4 Do you want to send an announcement on behalf of department to faculty only
+ *    3.5 Do you want to send an announcement on behalf of department to students only
+ *
+ *    -> after selecting from choices, we are redirecting to Proxy design class (NotificationImpl).
+ *        Here, I have used PROXY design pattern to delay the message. Until a delay of 10sec we do not send announcement.
+ *        When delay is over notification is sent to observers by calling University send notification implementation.
+ *
+ *        Also, COMMAND pattern has been used inside NotificationProxyImpl. Here, I am asking user to take action if user
+ *        wants to cancel the notification. If user selects yes in 10sec than notification wont be sent and user is redirected to main men
+ *
+ *  NOTE: Emergency notification service has been implemented where FRESNO STATE can send emergency alerts to everyone with no
+ *  intruption or delay.
+ *--------------------------------------------------------------------------------------------------------------------------
+ *
+ * 4. Main Menu from which user can take action looks as follows:
+ *    4.1 Create new department
+ *    4.2 Enter new Student data
+ *    4.3 Enter new Faculty Data
+ *    4.4 Remove a Department
+ *    4.5 Remove Faculty Data
+ *    4.6 Remove Student Data
+ *    4.7 View all Faculty data
+ *    4.8 View all students data
+ *    4.9 View All available departments
+ *    4.10 Send Notification
+ *
+ *------------------------------------------------------------------------------------------------------------------------
+ *  DESIGN Patterns and SOLIDS used:
+ *
+ *  5. In future if required we can make console input for colleges and university details too to make it more dynamic.
+ *  6. SINGLETON pattern is used in University(Fresno State)
+ *  7. COMPOSITE design pattern is used to make tree hierarchy structure as shown above in tree diagram.
+ *  8. PROXY design pattern is used to implement delay in sending announcements
+ *  9. COMMAND design pattern is used to take user action to cancle the announcement untill announcement is sent.
+ *  10. FACTORY design pattern has been followed to build core of project
+ *
+ *  11. Every class have single responsibilty like notification is used to configure notification, main to take input, etc
+ *  12. Liskov substitution is used along with following LAW of Demiter.
+ *  13. This project follows open for extension with very minimum changes.
+ *  14. Interface segeration has been used to implement single responsibility easily.
+ *
+ *  ----------------------------------------------------------------------------------------------------------------------
+ *  15. Exception handling has been done to omit any unexpected failure
+ *
+ *  16. Main class is the entry point of project
+ *
+ *  17. Created data_objects_dao classes for Student, Faculty, College, Department, University so that some basic properties
+ *      of each object can be stored easily.
+ *
+ * ------------------------------------------------------------------------------------------------------------------------
+ * User Interface:
+ * 18. UI class in package user_interface has been created to consolidate user inputs and proper console display in one class. If in future we
+ * needs to implement from UI then we can use UI class as reference.
+ *
  */
 
 public class Main {

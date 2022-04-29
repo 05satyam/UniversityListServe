@@ -5,6 +5,9 @@ import leaf.StudentLeafClass;
 
 import java.util.List;
 
+/**
+ * department dao
+ */
 public class Department {
 
     String departmentName;

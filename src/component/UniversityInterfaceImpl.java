@@ -22,7 +22,14 @@ public class UniversityInterfaceImpl extends University implements UniversityInt
     }
 
 
-
+    /**
+     *
+     * @param msg
+     * @param senderName
+     * @param notificationLevel
+     *
+     * send notification to all colleges or any one of the college
+     */
     @Override
     public void notifyObserver(String msg, String senderName, List<String> notificationLevel) {
         for (String collegeName : notificationLevel) {
@@ -33,6 +40,13 @@ public class UniversityInterfaceImpl extends University implements UniversityInt
         }
     }
 
+    /**
+     *
+     * @param msg
+     * @param senderName
+     *
+     * send emergency alerts
+     */
     @Override
     public void emergencyNotification(String msg, String senderName) {
         for (CollegeImpl college : this.getCollegeList()) {

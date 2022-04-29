@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * attempt to implement command design pattern using DelayTimerClass
+ * attempt to implement COMMAND design pattern using DelayTimerClass
  * which is implementing announcement cancelling logic using THREADS concept.
  */
 class CommandUndoClass {
@@ -15,6 +15,12 @@ class CommandUndoClass {
     public CommandUndoClass() {
     }
 
+    /**
+     *
+     * @return
+     *
+     * this method is for undo action i.e. to cancle the announcement is user wants
+     */
     public String runCommandOfCancellation() {
         long start = System.currentTimeMillis();
         long end = start + 3 * 1000;
@@ -61,6 +67,16 @@ public class NotificationProxyImpl implements NotificationProxyInterface {
     NotificationProxyInterface notificationProxyInterface;
     Scanner sc = new Scanner(System.in);
 
+    /**
+     *
+     * @param uvI
+     * @param msg
+     * @param senderName
+     * @param notificationLevel
+     * @throws InterruptedException
+     *
+     * send notification to observer. This is proxy method and will hold notifcation for atlest 10 sec
+     */
     @Override
     public void sendNotificationToObservers(UniversityInterface uvI, String msg, String senderName, List<String> notificationLevel) throws InterruptedException {
         //implement delay
@@ -75,6 +91,16 @@ public class NotificationProxyImpl implements NotificationProxyInterface {
             notificationProxyInterface.sendNotificationToObservers(uvI, msg, senderName, notificationLevel);
         }
     }
+
+    /**
+     *
+     * @param uvI
+     * @param msg
+     * @param senderName
+     * @param notificationLevel
+     *
+     * this is emergency notification sent from fresno state on immediate basis
+     */
 
     @Override
     public void sendEmergencyNotificationToObservers(UniversityInterface uvI, String msg, String senderName, List<String> notificationLevel) {

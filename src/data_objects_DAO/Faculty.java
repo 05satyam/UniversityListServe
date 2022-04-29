@@ -1,13 +1,11 @@
 package data_objects_DAO;
 
 import leaf.FacultyLeafClass;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import utilities.JsonParser;
-
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * faculty dao class
+ */
 public class Faculty {
     String facultyName;
     String departmentName;

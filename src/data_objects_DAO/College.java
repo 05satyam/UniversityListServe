@@ -4,6 +4,9 @@ import composite.departments.DepartmentImpl;
 
 import java.util.List;
 
+/**
+ * college dao
+ */
 public class College {
     String collegeName;
     List<DepartmentImpl> departmentList;

@@ -4,6 +4,9 @@ import composite.colleges.CollegeImpl;
 
 import java.util.List;
 
+/**
+ * university dao class
+ */
 public class University {
     private static University universitySingleInstance = null;
 

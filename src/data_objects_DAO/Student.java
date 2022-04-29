@@ -8,6 +8,9 @@ import utilities.JsonParser;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * student dao class
+ */
 public class Student {
     String studentName;
     String studentId;

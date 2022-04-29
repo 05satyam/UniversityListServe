@@ -1,25 +1,34 @@
 package user_interface;
 
-import component.UniversityInterface;
 import component.UniversityInterfaceImpl;
 import composite.colleges.CollegeImpl;
 import composite.departments.DepartmentImpl;
-import data_objects_DAO.Student;
-import data_objects_DAO.University;
 import leaf.FacultyLeafClass;
 import leaf.StudentLeafClass;
 import notification_proxy_implementation.NotificationProxyImpl;
 import notification_proxy_implementation.NotificationProxyInterface;
-import utilities.NotificationLevelEnum;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * THIS IS A USER INTERFACE CLASS WHERE ALL THE MENUS AND INPUTS ARE TAKEN FROM USER TO MAKE EASY FLOW OF THE APPLICATION
+ *
+ * METHODS ARE STATIC HERE BECAUSE THESE ARE MENU OPTIONS AND INPUTS FROM USERS WHICH WONT AFFECT THE DESIGN ON THE BACKEND.
+ */
+
 public class UI {
 
-
+    /**
+     *
+     * @param studentList
+     * @param facultyData
+     *
+     * this is a helper method to print all the availabe data when application loads initially.
+     *
+     */
     public static void printCurrentlyAvailableDataInUniversity(List<StudentLeafClass> studentList, List<FacultyLeafClass> facultyData) {
         System.out.println("Currently we have : " + studentList.size() + " number of students and " + facultyData.size() + " number of faculties in total");
         Scanner sc = new Scanner(System.in);
@@ -39,17 +48,38 @@ public class UI {
         }
     }
 
+    /**
+     *
+     * @param stList
+     * this method is used to print all the available students data on UI
+     */
     public static void printAvaliableStudentsData(List<StudentLeafClass> stList) {
         for (StudentLeafClass st : stList)
             System.out.println(st.toString());
     }
 
+    /**
+     *
+     * @param stList
+     * this method is used to print all the available faculties data on UI
+     *
+     */
     public static void printAvaliableFacultyData(List<FacultyLeafClass> stList) {
         for (FacultyLeafClass ft : stList)
             System.out.println(ft.toString());
     }
 
 
+    /**
+     *
+     * @param collegeList
+     * @param departmentListCSCM
+     * @param departmentListLYLES
+     * @param uv
+     * @throws InterruptedException
+     *
+     * THIS IS THE MAIN UI MENU TO DISPLAY ON CONSOLE.
+     */
     public static void printMainMenuForUser(List<CollegeImpl> collegeList, List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, UniversityInterfaceImpl uv) throws InterruptedException {
         Scanner sc = new Scanner(System.in);
         System.out.println("...............................Department Metrics............................................");
@@ -156,6 +186,12 @@ public class UI {
                 System.out.println("New Faculty data has been added successfully");
                 break;
             case 4:
+
+                /**
+                 * here we are implemeting to remove a department.
+                 * Taking user input which department to delete
+                 *
+                 */
                 System.out.println("....................................................................................");
 
                 System.out.println("You choose to remove a department. WARNING!! removing a department means" +
@@ -187,6 +223,10 @@ public class UI {
                         " from college " + choosenDept.getCollegeName());
                 break;
             case 5:
+                /**
+                 * here we are implementing to remove a faculty from any department.
+                 * Taking department input and then which faculty to remove
+                 */
                 System.out.println(".............................................................................................");
                 System.out.println("                         You have chose to remove a faculty");
                 System.out.println(".............................................................................................");
@@ -210,6 +250,9 @@ public class UI {
                 choosenDept.removeFaculty(facSeqId);
                 break;
             case 6:
+                /**
+                 * here we are removing student data from a department
+                 */
                 System.out.println(".............................................................................................");
                 System.out.println("                             You have chose to remove a student");
                 System.out.println(".............................................................................................");
@@ -234,6 +277,9 @@ public class UI {
                 choosenDept.removeStudent(facSeqId);
                 break;
             case 7:
+                /**
+                 * this case is reponsible to display all faculties from all the departments
+                 */
                 System.out.println(".............................................................................................");
                 System.out.println("             Displaying all Faculties from all the departments present at Fresno State");
                 System.out.println(".............................................................................................");
@@ -247,6 +293,9 @@ public class UI {
                 }
                 break;
             case 8:
+                /**
+                 * this case handles to display all the students of all departments
+                 */
                 System.out.println(".............................................................................................");
                 System.out.println("               Displaying all students from all the departments present at Fresno State");
                 System.out.println(".............................................................................................");
@@ -260,6 +309,9 @@ public class UI {
                 }
                 break;
             case 9:
+                /**
+                 * this case handles to display all departmets
+                 */
                 System.out.println(".............................................................................................");
                 System.out.println("                 Displaying all the departments present at Fresno State");
                 System.out.println(".............................................................................................");
@@ -271,6 +323,9 @@ public class UI {
                 }
                 break;
             case 10:
+                /**
+                 * this case is reponsible to send notifications as per requirement.
+                 */
                 int notificationCh = showNotificationMenuAndGetUserChoice();
                 sendNotifcationToObservers(notificationCh, collegeList, departmentListCSCM, departmentListLYLES, uv);
             default:
@@ -279,6 +334,12 @@ public class UI {
 
     }
 
+    /**
+     *
+     * @return
+     *
+     * method to display UI menu for notification
+     */
     public static int showNotificationMenuAndGetUserChoice() {
         Scanner sc = new Scanner(System.in);
         System.out.println(".............................................................................................");
@@ -295,6 +356,15 @@ public class UI {
         return notificationCh;
     }
 
+    /**
+     *
+     * @param departmentListCSCM
+     * @param departmentListLYLES
+     * @param deptCh
+     * @return
+     *
+     * this is a helper method and it is used to get department object which user wants
+     */
     public static DepartmentImpl getDepartmentWhichUserSelects(List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, int deptCh) {
         System.out.println("dept ch "+ deptCh + " departmentListCSCM.size() "+ departmentListCSCM.size());
         if (deptCh > departmentListCSCM.size()) {
@@ -305,6 +375,14 @@ public class UI {
         }
     }
 
+    /**
+     *
+     * @param departmentListCSCM
+     * @param departmentListLYLES
+     * @param uv
+     *
+     * A helper method. This method will display all the departments detals
+     */
     public static void printAllAvailableDepartments(List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, UniversityInterfaceImpl uv) {
         System.out.println("Departments available are: ");
         int i;
@@ -319,6 +397,17 @@ public class UI {
         }
     }
 
+    /**
+     *
+     * @param notificationCh
+     * @param collegeList
+     * @param departmentListCSCM
+     * @param departmentListLYLES
+     * @param uv
+     * @throws InterruptedException
+     *
+     * This is a helper method to send notification to observer and will be calling proxy classes
+     */
     public static void sendNotifcationToObservers(int notificationCh, List<CollegeImpl> collegeList,
                                                   List<DepartmentImpl> departmentListCSCM, List<DepartmentImpl> departmentListLYLES, UniversityInterfaceImpl uv) throws InterruptedException {
         NotificationProxyInterface nvI = new NotificationProxyImpl();

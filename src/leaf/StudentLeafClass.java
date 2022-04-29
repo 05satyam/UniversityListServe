@@ -32,10 +32,16 @@ public class StudentLeafClass extends Student implements UniversityInterface {
     }
 
 
+    /**
+     *
+     * @return
+     *
+     * this method will get the static student data when applications starts from student json in package static_data.
+     *
+     * It is an attempt to make thsi applciation as dynamic as possible
+     */
     public List<StudentLeafClass> getStudentListFromStaticData() {
-        System.out.println("inside getStudentListFromStaticData");
-        JSONArray jsonArray = JsonParser.getJsonArray("studentData", "/Users/satyammittal/IdeaProjects/UniversityListServe/src/static_data_json/studentDataList.json");
-        System.out.println("jsonArray "+ jsonArray);
+        JSONArray jsonArray = JsonParser.getJsonArray("studentData", "src/static_data_json/studentDataList.json");
         if (jsonArray == null){
             return new ArrayList<>();
         }
