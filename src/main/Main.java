@@ -122,6 +122,9 @@ import java.util.Scanner;
  * 18. UI class in package user_interface has been created to consolidate user inputs and proper console display in one class. If in future we
  * needs to implement from UI then we can use UI class as reference.
  *
+ * ----------------------------------------------------------------------------------------------------------------------
+ * NOTE: I am using students and faculty list as subscriber list. In future if required we can add subscriber list separatly.
+ *
  */
 
 public class Main {

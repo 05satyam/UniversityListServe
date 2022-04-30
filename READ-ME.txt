@@ -1,4 +1,4 @@
-1. Main.class inside package main is the entry point of the application
+1. Main.class inside package main is the entry point of the application. Major documentation is in main class
 
 2. Sample console input output looks as follows for reference:
 
